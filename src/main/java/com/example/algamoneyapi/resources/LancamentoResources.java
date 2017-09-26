@@ -40,7 +40,7 @@ import com.example.algamoneyapi.service.LancamentoService;
 import com.example.algamoneyapi.service.exception.PessoaInexistenteOuInativaException;
 
 
-@Controller
+
 @RestController
 @RequestMapping("/lancamentos")
 public class LancamentoResources {
@@ -57,6 +57,8 @@ public class LancamentoResources {
 	@Autowired
 	private LancamentoService lancamentoService;
 	
+	
+	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter,Pageable pageable){
@@ -72,7 +74,7 @@ public class LancamentoResources {
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public ResponseEntity <Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
 		
 		 Lancamento lancamentoSalva = lancamentoRepository.save(lancamento);	

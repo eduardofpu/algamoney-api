@@ -10,6 +10,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 import com.example.algamoneyapi.model.Pessoa;
 import com.example.algamoneyapi.model.Pessoa_;
@@ -22,21 +26,22 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery{
 	
 	
 	@Override
-	public List<Pessoa> filtrar(PessoaFilter pessoaFilter) {
+	public Page<Pessoa> filtrar(PessoaFilter pessoaFilter,Pageable pageable) {
 		
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Pessoa> criteria = builder.createQuery(Pessoa.class);
+		CriteriaQuery<Pessoa> criteria = builder.createQuery(Pessoa.class);		
 		
-		
-		Root<Pessoa> root = criteria.from(Pessoa.class);
-		
+		Root<Pessoa> root = criteria.from(Pessoa.class);		
 		//criar restrições
 		Predicate[] predicates = criarRestricoes(pessoaFilter,builder,root);				
-				criteria.where(predicates);
-				
-				TypedQuery<Pessoa> query = manager.createQuery(criteria);
+		criteria.where(predicates);				
+		TypedQuery<Pessoa> query = manager.createQuery(criteria);
 		
-		return query.getResultList();
+		adicionarRestricaesDePaginacao(query,pageable);
+		
+		//return query.getResultList();
+		return new PageImpl<>(query.getResultList(),pageable, total(pessoaFilter));
+		
 	}
 	
 	
@@ -52,5 +57,32 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery{
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
+	
+	//Restrições de paginações total de registro e onde começa
+    private void adicionarRestricaesDePaginacao(TypedQuery<?> query, Pageable pageable) {
+		int paginaAtual = pageable.getPageNumber();
+		int totalRegistroPorPagina = pageable.getPageSize();
+		int primeiroRegistroDaPagina = paginaAtual * totalRegistroPorPagina;
+		
+		query.setFirstResult(primeiroRegistroDaPagina);
+		query.setMaxResults(totalRegistroPorPagina);
+		
+	}
+    
+    private Long total(PessoaFilter pessoaFilter) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+		
+		Root<Pessoa> root = criteria.from(Pessoa.class);
+		
+		Predicate[] predicates = criarRestricoes(pessoaFilter, builder, root);
+		criteria.where(predicates);
+		criteria.select(builder.count(root));//conta quantos registro tem pra min
+		
+		
+		return manager.createQuery(criteria).getSingleResult();//Retorna um resultado
+	}
+    
+    
 
 }
