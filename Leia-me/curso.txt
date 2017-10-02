@@ -1,0 +1,63 @@
+IDES: PARA SPRING
+spring.io/tools/sts/all
+
+OU 
+
+BAIXAR DEPENDENCIAS
+https://start.spring.io
+
+PARA AJUDAR A TESTAR APIS  REQUISIÇÕES VIA HTTP
+www.getpostman.com
+
+para testar api atraves de requisições gera json com link para usar no postman
+www.mocky.io
+https://flywaydb.org
+
+
+//verificar o token
+https://jwt.io
+
+
+\\\\\\\\\\\\\\comandos para gerar\\\\\\\\\\\\
+hashcode:
+ghca
+
+gets e sets
+ggas
+
+construtor
+gcuf
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\heroku algamoney-api\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+//CRIAR UM NOME PARA O PROJETO
+heroku create algamoney-api
+
+//CRIAR UM MSQL NO HEROKU
+heroku addons:create jawsdb
+
+//CONTEUDOS DA VARIAVEL DO MYSQL CRIADA NO HEROKU
+heroku config:get JAWSDB_URL
+
+//CRIAR NOMES DAS VARIAVEIS DATABASE
+heroku config:set JDBC_DATABASE_URL=jdbc:mysql://endereco do banco JDBC_DATABASE_USERNAME=nome do usuario JDBC_DATABASE_PASSWORD= senha
+
+//conferir
+heroku config
+
+//deploy
+git push heroku master
+
+//log
+heroku logs --tail
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\HEROKU algamoney-angular\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//cria a DOMINIO NO HEROKU
+heroku apps: create algamoney-angular
+
+git add .
+git commit -m"Deploy"
+git push heroku master
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+

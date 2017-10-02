@@ -1,0 +1,90 @@
+//Aula 10.3 completado
+Criando o projeto
+ng new algamoney-ui
+
+//Instalando o primeng no package.json
+npm install primeng --save
+
+//Adicionar icones no package.json
+npm install font-awesome --save	
+
+//https://momentjs.com
+npm install moment --save
+
+//https://github.com/akserg/ng2-toasty    para exibir mensagens
+npm install ng2-toasty --save
+
+//jwt
+npm install angular2-jwt --save
+
+\\\\\\\\.angular-cli.json\\\\\\\\\
+configurar caminhos
+
+"styles": [
+  "../node_modules/ng2-toasty/style-bootstrap.css",
+  "../node_modules/font-awesome/css/font-awesome.min.css",
+  "../node_modules/primeng/resources/primeng.min.css",
+  "../node_modules/primeng/resources/themes/omega/theme.css",
+  "styles.css"
+]
+
+///////////quando colocar componentes fazer importações\\\\\\\
+
+//site para verificar como importar
+https://www.primefaces.org/primeng/#/
+
+//Dentro do app.modules.ts
+import {TabViewModule} from 'primeng/primeng';
+
+\\\\\\\\\\\\\\\\\Iniciar a aplicação\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+ng serve
+
+\\\\\\\\\\\\\\\\\\\\\\\\novo componente\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+ng g c lancamentos-pesquisa
+ng g c navbar --spec=false
+ng g c pessoas-pesquisa
+ng g c lancamento-cadastro --spec=false
+ng g c message --spec=false --inline-template --inline-style
+
+\\\\\\\\\\\\\\\\\\\\\\\\novo servico\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+ng g s lancamentos/lancamento --spec=false
+ng g s core/error-handler --spec=false
+ng g s seguranca/auth --spec=false
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Guardian\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ng g g guardian
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Bild\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//cria a pasta dist
+ng build --environment=prod
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\HEROKU\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//cria a DOMINIO NO HEROKU
+heroku apps: create algamoney-angular
+
+git add .
+git commit -m"Deploy"
+git push heroku master
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+//reduz o tamanho da pasta dist
+ng build --prod
+
+
+
+	
+
+
+
+
+
+
+
+
+
+

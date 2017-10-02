@@ -1,0 +1,286 @@
+
+\\\\\\Instalar e criar um novo projeto\\\\\\\\\\\\
+
+Angular cli  ferramenta de linha de comando
+
+
+//Se tiver versão desatualizada use esse comando
+npm uninstall -g @angular/cli
+
+//Para linpar o cache da sua maquina ao desinstalar o angular cli
+npm cache clean
+
+//Instalar o angular cli
+npm install -g @angular/cli
+
+//verificar a versão instalada do angular cli
+ng -v
+
+//instalar um novo projeto
+ng new meuprojeto
+
+//Iniciar o servidor de teste
+ng server
+
+//Para usar outra porta use outro porta com o comando
+ng server --port 8181
+
+\\\\\\\\\\\\\\\\\\Criando components\\\\\\\\\\\\\\\\\
+
+//Criando um component  
+ng generate component ou ng g c
+ng g c hello
+oque e criado? pasta, css, html, ts e spec
+
+//Para ignorar a criação de spec.ts arquivos para teste
+ng g c hello --spec=false
+Pasta: hello = hello.css, hello.html, hello.ts
+
+\\\\\\\\\\\\\\\instalando o getbootstrap.com\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//@next instala a versao atual --save salva a entrada das dependencias do package.json
+npm install bootstrap@next --save
+
+importante no arquivo angular-cli.json
+
+acrescente o bootstrat na linha  
+
+"styles": [
+"styles.css",
+"../node_module/bootstrap/dist/css/bootstrap.css
+],
+
+\\\\\\\\\\\\\\\\\\\\\\\\\Data binding\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+Serve para vincular o componente ao template
+
+               event binding      (click)="nome"
+COMPONENTE   ---------------------------------->  TEMPLATE
+
+               properties binding [prop]="salvar()"
+COMPONENTE   ---------------------------------->  TEMPLATE
+           
+               interpolação       {{nome}}           
+COMPONENTE   <----------------------------------  TEMPLATE
+
+              two way data binding [(ngModel)]="nome"           
+COMPONENTE   <----------------------------------> TEMPLATE
+
+\\\\\\\\\\\\\\\interpolação\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+idade = 20;
+
+getidade(){
+
+return this.idade;
+
+}
+
+{{ 20 + getIdade()}}
+
+\\\\\\\\\\\\\\\\\\\\\event binding\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+adicionar(){
+
+console.log(`Adicionado` ${this.nome});// template literos `com crase`
+console.log('Adicionado' + this.nome );
+}
+
+on-click="adicionar()"// angular
+onclick="adicionar()" //javascript
+
+(click)="adicionar()"// Forma mais usada
+
+alterarNome(evento: any){
+
+this.nome = event.target.value;
+
+}
+
+(input)="alterarNome($event)"
+value="{{nome}}" ou [value]="nome"	
+
+\\\\\\\\\\\\\\\\\\\\\\\Por referencia\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+<input type="text" class="form-control" #nomeInput>
+
+<button type="button" (click)="adicionar(nomeInput.value)>add</button>
+
+//metodo
+adicionar(evento: any){
+  this.nome = nome;
+}
+
+\\\\\\\\\\\\\\\\\\\\\\\\\Propriedade para Desabilar\\\\\\\\\\\\\\\\\\\\\\\\
+propriedade para desabilitar
+< type="button" disable" />
+
+forma canonica de fazer
+< type="button" (click)="adicionar()" bind-disable="nome.length == 0" />
+
+simplificada
+< type="button" (click)="adicionar()" [disable]="nome.length == 0" />
+
+\\\\\\\\\\\\\\\\\\\\two-way-binding\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+banana box
+banana na caixa [()]
+
+usar o pacote : importa FomsModule  no    app.modules.ts
+
+[(ngModel)]="nome" // do compontet para o template e template para componente
+
+e o mesmo que:
+
+<input type="text" (input)="nome=$event.target.value" [value]="nome">
+
+\\\\\\\\\\\\\\\\\\\\\\\\\Diretivas\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+Diretivas são instruções passadas do template no html
+
+//Categoria de diretivas
+COMPONENTES, DIRETIVAS ESTRUTURAIS E DIRETIVAS DE ATRIBUTOS
+
+COMPONTENTE: <lista-pessoa></lista-pessoa>
+
+ESTRUTURAIS: <h2 *ngIf="logado">Olá {{nomeUsuario}}</h2>
+
+ATRIBUTOS: MODIFICA A APARENCIA DO ELEMENTO
+<h2 [style.color]="red">Olá {{nomeUsuario}}</h2>
+
+customisada:
+<h2 atencao>Olá {{nomeUsuario}}</h2>
+
+//Exemplos
+
+adicionado=false;
+
+
+adicionar(){
+
+console.log(`Adicionado ${this.nome}`);
+this.adicionado = true;
+
+}
+
+//Esse codigo ao especionar o elemento html o usuario não ve o codigo
+<div *ngIf="adicionado">
+    Funcionarios adicionados
+<input type="text" [(ngModel)]="nome" (focus)
+</div>
+
+ou
+//Esse codio ao especionar o elemento html o usuario ve o codigo
+<div [hidden]="!adicionado">
+    Funcionarios adicionados
+<input type="text" [(ngModel)]="nome" (focus)="adicionado = false>
+</div>
+
+
+<button>adcionar</button>
+
+\\\\\\\\\\\\\\\\\\\\\\\Diretiva ngFor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+ultimoId = 0;
+funcionarios[];
+
+   adicionar(){
+
+   this.funcionarios.push({
+
+
+    id: ++this.ultimoId,
+    nome: this.nome
+
+
+   }
+  });
+}
+
+
+//Isso faz mudar o dom  a estrutura do html
+<div *ngFor="let funcionario of funcionarios">
+   codigo:{{funcionarios.id}} nome:{{funcionarios.nome}}
+
+</div>
+
+\\\\\\\\\\\\\\\\\\\\\\\\Entrada e sidad de componentes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+@Input()
+@Output() funcionarioAdicionado = new EventEmitter();// traz de fora de outro template
+<app-funcionario-form (funcionarioAdicionado)="adicionar()"></app-funcionario-from>
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\estilo-css\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+//objeto javascript { 'bakground-color': 'red'}
+
+[ngStyle]="{ 'bakground-color': 'red'}"
+
+[ngClass]="'badge','gadge-default'"
+
+pode usar medoto
+
+[ngStyle]="get()"
+
+[ngClass]="get()"
+
+\\\\\\\\\\\\\\\\\\\\\\\Executar TsLint.json\\\\\\\\\\\\\\\\\\\\
+//verifica os erros dos codigos
+executar o TsLint.json
+cmd
+node_modules/tsLint/bin/tslint --project tslint.json
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\extensões do visual code\\\\\\\\\\\\\\\\\\\\
+comando: TSLint
+VisualStudio Code
+
+//Deixa o estilo de codificação padronizado
+.editorconfig
+comando: editorconfig
+
+site: editorconfig.org/#download
+
+//completa tags
+comando: HTML Snippp
+
+//auto import
+comando: Auto Import 1.22
+
+\\\\\\\\\\\\\\\componenstes usados por outras pessoas\\\\\\\\\
+
+//Instalar bibliotecas de componentes
+https:material.angular.io
+
+angular2-materialize.surge.sh/#/Buttons
+
+https://ng-bootstrap.github.io/#/components/accordion
+
+valor-software.com/ngx-bootstrap/#/
+
+//E a mais completa
+https://www.primefaces.org/primeng/#/
+
+//Adicionar icones
+fontawesome.io/icons/
+
+\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
