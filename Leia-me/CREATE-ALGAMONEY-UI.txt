@@ -54,6 +54,11 @@ ng g s lancamentos/lancamento --spec=false
 ng g s core/error-handler --spec=false
 ng g s seguranca/auth --spec=false
 
+\\\\\\\\\\\\\\\\\\\\\\\\novo modulo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+ng g m modolocriado
+
+
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Guardian\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ng g g guardian
 
